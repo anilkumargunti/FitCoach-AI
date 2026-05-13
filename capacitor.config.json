@@ -1,0 +1,32 @@
+{
+  "appId": "in.fitcoachai.app",
+  "appName": "FitCoach AI",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#0d0d0d",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "splashFullScreen": true,
+      "splashImmersive": true
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#0d0d0d"
+    }
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "backgroundColor": "#0d0d0d"
+  },
+  "android": {
+    "backgroundColor": "#0d0d0d",
+    "allowMixedContent": false,
+    "captureInput": true
+  }
+}
