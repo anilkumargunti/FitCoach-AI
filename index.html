@@ -3,992 +3,543 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>FitCoach AI — Your Personal Fitness App</title>
-<meta name="description" content="AI-powered workout plans, meal plans & calorie tracker. Your complete fitness companion.">
-<meta name="theme-color" content="#639922">
+<title>FitCoach AI</title>
+<meta name="theme-color" content="#0C0C0C">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="FitCoach AI">
-<meta property="og:title" content="FitCoach AI">
-<meta property="og:description" content="AI workout plans + calorie tracker in one app">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --g: #639922; --gd: #3B6D11; --gl: #EAF3DE; --gm: #97C459;
-  --bg: #0d0d0d; --bg2: #161616; --bg3: #1e1e1e; --bg4: #252525;
-  --bdr: rgba(255,255,255,0.07); --bdr2: rgba(255,255,255,0.12);
-  --t: #f0f0f0; --t2: #9a9a9a; --t3: #555;
-  --r: 14px; --rs: 9px; --rx: 20px;
-  --red: #e05252; --blue: #5285e0; --orange: #e08a25;
-}
+:root{--bg:#0C0C0C;--bg2:#131313;--bg3:#1A1A1A;--bg4:#222;--gold:#C8A96E;--gold2:#E2C97E;--gold3:rgba(200,169,110,0.12);--cream:#EDE8DF;--t2:#9A9590;--t3:#555050;--bdr:rgba(255,255,255,0.05);--bdr2:rgba(255,255,255,0.10);--bdr3:rgba(200,169,110,0.25);--r:16px;--rs:10px;--red:#D96B6B;--blue:#6B9ED9;--orange:#D9956B}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;height:100%}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);min-height:100%;overflow-x:hidden}
-button,select,input{font-family:'DM Sans',sans-serif}
-img{display:block}
-
-/* ── SCREENS ── */
-.screen{display:none;min-height:100vh}
-.screen.active{display:block}
-
-/* ══════════════ LANDING ══════════════ */
-#s-landing{background:var(--bg)}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;position:sticky;top:0;background:rgba(13,13,13,0.92);backdrop-filter:blur(12px);z-index:50;border-bottom:1px solid var(--bdr)}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.05em;color:var(--t)}
-.nav-logo span{color:var(--g)}
-.nav-cta{background:var(--g);color:#fff;border:none;border-radius:20px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer}
-
-.hero{padding:56px 24px 48px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(99,153,34,.18) 0%,transparent 65%);pointer-events:none}
-.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(99,153,34,.12);border:1px solid rgba(99,153,34,.28);color:var(--gm);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:22px}
-.badge-dot{width:6px;height:6px;background:var(--gm);border-radius:50%;animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(58px,17vw,88px);line-height:.92;margin-bottom:22px;letter-spacing:.01em}
-.hero h1 em{font-style:normal;color:var(--g)}
-.hero p{font-size:16px;color:var(--t2);line-height:1.7;max-width:340px;margin:0 auto 32px}
-
-.pill-row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:28px}
-.pill{display:flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--bdr2);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--t2)}
-.pill span{color:var(--g);font-size:14px}
-
-.price-box{display:inline-flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--bdr2);border-radius:var(--r);padding:14px 20px;margin-bottom:24px}
-.price-box .amt{font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--g);line-height:1}
-.price-box .pinfo strong{display:block;font-size:13px;font-weight:600}
-.price-box .pinfo span{font-size:11px;color:var(--t2)}
-
-.hero-btn{display:block;width:100%;max-width:360px;margin:0 auto;padding:17px;background:var(--g);color:#fff;border:none;border-radius:var(--r);font-family:'Bebas Neue',sans-serif;font-size:23px;letter-spacing:.08em;cursor:pointer;transition:all .2s}
-.hero-btn:hover{background:var(--gd)}
-.hero-btn:active{transform:scale(.98)}
-
-/* Feature strip */
-.strip{display:flex;overflow-x:auto;gap:12px;padding:32px 24px;scrollbar-width:none}
-.strip::-webkit-scrollbar{display:none}
-.strip-card{flex-shrink:0;width:160px;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:18px 16px}
-.strip-card .ico{font-size:26px;margin-bottom:10px}
-.strip-card h3{font-size:13px;font-weight:700;margin-bottom:5px;line-height:1.3}
-.strip-card p{font-size:11px;color:var(--t2);line-height:1.5}
-
-/* Screenshots mockup */
-.mockup-section{padding:40px 24px;text-align:center}
-.sec-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:8px}
-.sec-h{font-family:'Bebas Neue',sans-serif;font-size:38px;line-height:1.1;margin-bottom:6px}
-.sec-p{font-size:14px;color:var(--t2);margin-bottom:28px;line-height:1.6}
-.phones{display:flex;justify-content:center;gap:16px;overflow-x:auto;padding-bottom:8px}
-.phone-frame{flex-shrink:0;width:160px;height:280px;background:var(--bg2);border:2px solid var(--bdr2);border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
-.phone-notch{height:20px;background:var(--bg3);display:flex;align-items:center;justify-content:center}
-.phone-notch::after{content:'';width:40px;height:4px;background:var(--bg4);border-radius:4px}
-.phone-body{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:6px}
-.pscreen-title{font-family:'Bebas Neue',sans-serif;font-size:13px;color:var(--g);letter-spacing:.05em}
-.pscreen-bar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
-.pscreen-bar .fill{height:100%;background:var(--g);border-radius:3px}
-.pscreen-row{display:flex;gap:5px}
-.pscreen-col{flex:1;height:36px;background:var(--bg3);border-radius:6px}
-.pscreen-list-item{height:22px;background:var(--bg3);border-radius:5px;margin-bottom:4px}
-.pscreen-macro{display:flex;gap:4px;margin-top:4px}
-.macro-dot{flex:1;height:28px;border-radius:6px}
-
-/* Pricing section */
-.pricing{padding:40px 24px;background:var(--bg2)}
-.plan-cards{display:flex;flex-direction:column;gap:14px;margin-top:24px}
-.plan-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;position:relative}
-.plan-card.featured{border-color:var(--g)}
-.plan-card .feat-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 12px;border-radius:10px;white-space:nowrap}
-.plan-card h3{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:.03em;margin-bottom:4px}
-.plan-card .plan-price{font-size:30px;font-weight:700;color:var(--g);margin-bottom:12px}
-.plan-card .plan-price span{font-size:13px;font-weight:400;color:var(--t2)}
-.plan-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
-.plan-list li{font-size:13px;color:var(--t2);display:flex;align-items:center;gap:8px}
-.plan-list li::before{content:'✓';color:var(--g);font-weight:700;flex-shrink:0}
-.plan-btn{width:100%;padding:13px;border:none;border-radius:var(--rs);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
-.plan-btn.primary{background:var(--g);color:#fff}
-.plan-btn.outline{background:transparent;border:1px solid var(--bdr2);color:var(--t2)}
-
-/* FAQ */
-.faq{padding:40px 24px}
-.faq-item{border-bottom:1px solid var(--bdr);padding:16px 0;cursor:pointer}
-.faq-q{font-size:14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.faq-q .arrow{color:var(--t2);transition:transform .2s;flex-shrink:0}
-.faq-q.open .arrow{transform:rotate(180deg)}
-.faq-a{font-size:13px;color:var(--t2);line-height:1.7;margin-top:10px;display:none}
-.faq-a.open{display:block}
-
-/* Footer */
+html,body{height:100%;overflow-x:hidden;background:var(--bg)}
+body{font-family:'DM Sans',sans-serif;color:var(--cream)}
+.screen{display:none;min-height:100vh}.screen.active{display:block}
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;position:sticky;top:0;background:rgba(12,12,12,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);z-index:50}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.08em}.logo span{color:var(--gold)}
+.top-cta{background:var(--gold);color:#0C0C0C;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer}
+.hero{padding:64px 24px 52px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;right:-80px;width:340px;height:340px;background:radial-gradient(circle,rgba(200,169,110,.07) 0%,transparent 65%);pointer-events:none}
+.htag{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--bdr3);border-radius:20px;padding:5px 14px;margin-bottom:24px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.htag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);animation:glow 2s infinite}
+@keyframes glow{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(62px,18vw,96px);line-height:.9;letter-spacing:.01em;margin-bottom:28px}
+h1 em{font-style:normal;color:var(--gold)}
+.hsub{font-size:15px;color:var(--t2);line-height:1.75;max-width:320px;margin-bottom:36px;font-weight:300}
+.pstrip{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.pamt{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--gold);line-height:1}
+.pinfo strong{display:block;font-size:14px;font-weight:500}.pinfo span{font-size:12px;color:var(--t2)}
+.hero-cta{display:block;width:100%;max-width:360px;padding:17px;background:var(--gold);color:#0C0C0C;border:none;border-radius:var(--rs);font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:.1em;cursor:pointer}
+.hero-cta:active{transform:scale(.98)}
+.tpills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tp{font-size:12px;color:var(--t2);font-weight:300;display:flex;align-items:center;gap:5px}
+.tp::before{content:'✓';color:var(--gold);font-size:10px}
+.sect{padding:40px 24px}
+.slbl{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.sh{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1.05;margin-bottom:6px}
+.sp{font-size:14px;color:var(--t2);font-weight:300;line-height:1.7;margin-bottom:24px}
+.flist{display:flex;flex-direction:column;gap:1px;background:var(--bdr)}
+.fi{display:flex;align-items:center;gap:16px;padding:18px 20px;background:var(--bg2)}
+.fi:first-child{border-radius:var(--r) var(--r) 0 0}.fi:last-child{border-radius:0 0 var(--r) var(--r)}
+.fi-ico{width:40px;height:40px;border-radius:10px;background:var(--gold3);border:1px solid var(--bdr3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.fi strong{display:block;font-size:14px;font-weight:500;margin-bottom:2px}.fi span{font-size:12px;color:var(--t2);font-weight:300}
+.fi-arr{margin-left:auto;color:var(--t3);font-size:18px}
+.demo-sect{padding:0 24px 40px}
+.dc{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;margin-bottom:10px}
+.dc-hd{padding:16px 20px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px}
+.dc-hd .di{font-size:18px}.dc-hd strong{font-size:14px;font-weight:500}
+.dc-hd .dtag{margin-left:auto;background:var(--gold3);border:1px solid var(--bdr3);color:var(--gold);font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+.dc-bd{padding:18px 20px;font-size:13px;line-height:2;color:var(--t2);font-weight:300}
+.dc-bd strong{color:var(--cream);font-weight:500}
+.dlbl{color:var(--gold);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-top:10px;display:block}
+.steps{display:flex;flex-direction:column;gap:20px}
+.step{display:flex;gap:16px;align-items:flex-start}
+.snum{width:32px;height:32px;border-radius:50%;border:1px solid var(--bdr3);background:var(--gold3);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--gold);flex-shrink:0;margin-top:2px}
+.step strong{display:block;font-size:14px;font-weight:500;margin-bottom:3px}
+.step p{font-size:13px;color:var(--t2);font-weight:300;line-height:1.6}
+.pw{padding:40px 24px;background:var(--bg2)}
+.pstack{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+.pbox{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--r);padding:22px;position:relative}
+.pbox.best{border-color:var(--gold);background:var(--bg2)}
+.bbadge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--gold);color:#0C0C0C;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 14px;border-radius:10px;white-space:nowrap}
+.pn{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.04em;margin-bottom:4px}
+.pp{font-size:28px;font-weight:600;color:var(--gold);margin-bottom:14px}.pp span{font-size:13px;font-weight:300;color:var(--t2)}
+.pperks{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.pperks li{list-style:none;font-size:13px;color:var(--t2);font-weight:300;display:flex;align-items:center;gap:8px}
+.pperks li::before{content:'—';color:var(--gold);font-size:12px}
+.pbtn{width:100%;padding:13px;border:none;border-radius:var(--rs);font-size:14px;font-weight:600;cursor:pointer}
+.pbtn.gold{background:var(--gold);color:#0C0C0C}.pbtn.ghost{background:transparent;border:1px solid var(--bdr2);color:var(--t2)}
+.faqw{padding:40px 24px}
+.fqi{border-bottom:1px solid var(--bdr);padding:16px 0;cursor:pointer}
+.fqq{font-size:14px;font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.fqa{font-size:13px;color:var(--t2);font-weight:300;line-height:1.75;margin-top:10px;display:none}
+.fqa.open{display:block}.fqq.open .farr{transform:rotate(180deg);color:var(--gold)}.farr{color:var(--t3);transition:transform .2s;flex-shrink:0}
 footer{padding:32px 24px;border-top:1px solid var(--bdr);text-align:center}
-footer p{font-size:12px;color:var(--t3);line-height:1.8}
-footer a{color:var(--g)}
-
-/* ══════════════ PAYMENT SCREEN ══════════════ */
-#s-pay{background:var(--bg)}
-.pay-wrap{max-width:460px;margin:0 auto;padding:24px}
-.back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--t2);font-size:14px;cursor:pointer;margin-bottom:28px}
-.pay-wrap h2{font-family:'Bebas Neue',sans-serif;font-size:38px;margin-bottom:6px}
-.pay-wrap>p{font-size:14px;color:var(--t2);margin-bottom:24px}
-.summary{background:var(--bg2);border:1px solid var(--bdr2);border-radius:var(--r);padding:16px;margin-bottom:24px}
-.sum-row{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;border-bottom:1px solid var(--bdr)}
-.sum-row:last-child{border:none}
-.sum-row span{color:var(--t2)}
-.sum-row strong{color:var(--t)}
-.sum-total{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--g) !important}
-.pay-opts{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-.pay-opt{display:flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:16px;text-decoration:none;cursor:pointer;transition:border-color .15s}
-.pay-opt:hover{border-color:var(--g)}
-.opt-ico{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.opt-ico.in{background:rgba(99,153,34,.15)}
-.opt-ico.gl{background:rgba(82,133,224,.15)}
-.opt-text strong{display:block;font-size:14px;color:var(--t);margin-bottom:2px}
-.opt-text span{font-size:12px;color:var(--t2)}
-.opt-badge{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:6px;white-space:nowrap}
-.opt-badge.in{background:rgba(99,153,34,.15);color:var(--gm)}
-.opt-badge.gl{background:rgba(82,133,224,.15);color:#85b7eb}
-.demo-skip{width:100%;padding:13px;background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rs);color:var(--t2);font-size:13px;cursor:pointer;margin-bottom:12px}
-.pay-note{font-size:12px;color:var(--t3);text-align:center;line-height:1.6}
-.pay-note a{color:var(--g)}
-
-/* ══════════════ MAIN APP ══════════════ */
+footer p{font-size:12px;color:var(--t3);line-height:2;font-weight:300}footer a{color:var(--gold);text-decoration:none}
+#s-pay .inner{max-width:460px;margin:0 auto;padding:24px}
+.back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--t2);font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:32px;font-weight:300}
+.pay-h{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:.02em;margin-bottom:4px}
+.pay-s{font-size:14px;color:var(--t2);font-weight:300;margin-bottom:24px}
+.obox{background:var(--bg2);border:1px solid var(--bdr2);border-radius:var(--r);padding:18px;margin-bottom:24px}
+.or{display:flex;justify-content:space-between;font-size:14px;padding:9px 0;border-bottom:1px solid var(--bdr)}
+.or:last-child{border:none}.or span{color:var(--t2);font-weight:300}.or strong{color:var(--cream)}
+.otv{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--gold)!important}
+.pms{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.pm{display:flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:16px;cursor:pointer;text-decoration:none;transition:border-color .15s}
+.pm:hover{border-color:var(--gold)}
+.pm-ico{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;background:var(--gold3);border:1px solid var(--bdr3)}
+.pm-t strong{display:block;font-size:14px;margin-bottom:2px}.pm-t span{font-size:12px;color:var(--t2);font-weight:300}
+.pm-b{margin-left:auto;font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:6px;background:var(--gold3);color:var(--gold);white-space:nowrap}
+.pm-b.gl{background:rgba(107,158,217,.12);color:#6B9ED9}
+.dbtn{width:100%;padding:13px;background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rs);color:var(--t3);font-size:12px;cursor:pointer;margin-bottom:12px;font-family:'DM Sans',sans-serif}
+.pnote{font-size:12px;color:var(--t3);text-align:center;line-height:1.7;font-weight:300}.pnote a{color:var(--gold)}
 #s-app{display:none;flex-direction:column;height:100vh;background:var(--bg)}
 #s-app.active{display:flex}
-.app-top{flex-shrink:0;padding:16px 20px 0;display:flex;align-items:center;justify-content:space-between}
-.app-top .logo{font-family:'Bebas Neue',sans-serif;font-size:21px;color:var(--t);letter-spacing:.05em}
-.app-top .logo span{color:var(--g)}
-.streak{display:flex;align-items:center;gap:6px;background:rgba(99,153,34,.12);border:1px solid rgba(99,153,34,.2);border-radius:16px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--gm)}
-
-/* Tab content */
-.app-content{flex:1;overflow-y:auto;padding:0 0 80px}
-.tab-panel{display:none;padding:20px}
-.tab-panel.active{display:block}
-
-/* Bottom nav */
-.bottom-nav{flex-shrink:0;position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--bdr2);display:flex;height:64px;z-index:100}
-.nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;transition:color .15s;color:var(--t3);border:none;background:none}
-.nav-tab.active{color:var(--g)}
-.nav-tab .ico{font-size:20px}
-.nav-tab .lbl{font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
-
-/* ── TAB 1: AI PLANS ── */
-.panel-head{margin-bottom:20px}
-.panel-head h2{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.02em;margin-bottom:4px}
-.panel-head p{font-size:13px;color:var(--t2)}
-
-.form-fields{display:flex;flex-direction:column;gap:14px;margin-bottom:20px}
-.ff{display:flex;flex-direction:column;gap:5px}
-.ff label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t2)}
-.ff select{padding:11px 14px;background:var(--bg2);border:1px solid var(--bdr2);border-radius:var(--rs);color:var(--t);font-size:14px;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
-.ff select:focus{border-color:var(--g)}
-.ff select option{background:var(--bg2)}
-
-.chips{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.chip{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rs);cursor:pointer;font-size:12px;color:var(--t2);transition:all .15s;user-select:none}
-.chip.on{border-color:var(--g);color:var(--gm);background:rgba(99,153,34,.08)}
-.chip .ck{width:14px;height:14px;border:1.5px solid var(--t3);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.chip.on .ck{background:var(--g);border-color:var(--g)}
-.chip.on .ck::after{content:'';width:5px;height:5px;background:#fff;border-radius:50%;display:block}
-
-.gen-btn{width:100%;padding:15px;background:var(--g);color:#fff;border:none;border-radius:var(--r);font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:.08em;cursor:pointer;transition:background .2s}
-.gen-btn:hover{background:var(--gd)}
-.gen-btn:disabled{background:var(--bg3);color:var(--t3);cursor:not-allowed}
-
-/* Loading */
-.loader-box{text-align:center;padding:50px 20px}
-.dots{display:inline-flex;gap:7px;margin-bottom:18px}
-.dot{width:9px;height:9px;background:var(--g);border-radius:50%;animation:pop 1.2s infinite ease-in-out}
-.dot:nth-child(2){animation-delay:.15s}
-.dot:nth-child(3){animation-delay:.3s}
-@keyframes pop{0%,80%,100%{transform:scale(.5);opacity:.3}40%{transform:scale(1);opacity:1}}
-.loader-box p{font-size:15px;color:var(--t2)}
-.loader-box small{font-size:12px;color:var(--t3);display:block;margin-top:6px}
-
-/* Plan result */
-.result-anim{animation:up .35s ease}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.res-badge{display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:14px;margin-bottom:16px}
-.res-check{width:36px;height:36px;background:rgba(99,153,34,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.res-badge strong{display:block;font-size:14px;margin-bottom:2px}
-.res-badge span{font-size:12px;color:var(--t2)}
-.plan-block{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:12px;overflow:hidden}
-.plan-block-hd{padding:13px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:9px}
-.plan-block-hd .e{font-size:18px}
-.plan-block-hd strong{font-size:14px;font-weight:600}
-.plan-block-bd{padding:14px 16px;font-size:13px;line-height:1.85;color:var(--t2);white-space:pre-wrap}
-.reset-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:13px;background:none;border:1px solid var(--bdr2);border-radius:var(--r);color:var(--t2);font-size:13px;cursor:pointer;transition:all .15s;margin-top:6px}
-.reset-btn:hover{border-color:var(--g);color:var(--gm)}
-
-/* ── TAB 2: CALORIE TRACKER ── */
-.cal-date-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.cal-date-nav button{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rs);padding:8px 12px;color:var(--t);font-size:18px;cursor:pointer}
-.cal-date-nav strong{font-size:15px;font-weight:600}
-
-.cal-ring-wrap{display:flex;justify-content:center;margin-bottom:20px}
-.cal-ring-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;text-align:center;width:100%}
-.ring-container{position:relative;width:130px;height:130px;margin:0 auto 16px}
-.ring-svg{transform:rotate(-90deg)}
-.ring-bg{fill:none;stroke:var(--bg3);stroke-width:10}
-.ring-fill{fill:none;stroke:var(--g);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .5s ease}
-.ring-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-.ring-label .cal-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--t);line-height:1}
-.ring-label .cal-unit{font-size:10px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
-.ring-label .cal-goal{font-size:10px;color:var(--t3);margin-top:2px}
-
-.macro-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.macro-card{background:var(--bg3);border-radius:var(--rs);padding:12px;text-align:center}
-.macro-card .m-val{font-size:20px;font-weight:700;margin-bottom:2px}
-.macro-card .m-lbl{font-size:10px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
-.macro-bar{height:4px;background:var(--bg4);border-radius:2px;overflow:hidden}
-.macro-bar .mfill{height:100%;border-radius:2px;transition:width .4s ease}
-.m-pro .m-val{color:#5285e0}.m-pro .mfill{background:#5285e0}
-.m-carb .m-val{color:#e08a25}.m-carb .mfill{background:#e08a25}
-.m-fat .m-val{color:#e05252}.m-fat .mfill{background:#e05252}
-
-.meals-section{margin-top:20px}
-.meals-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.meals-head h3{font-size:14px;font-weight:700}
-.add-meal-btn{display:flex;align-items:center;gap:5px;background:rgba(99,153,34,.12);border:1px solid rgba(99,153,34,.25);color:var(--gm);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer}
-
-.meal-entry{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rs);padding:12px 14px;margin-bottom:8px}
-.meal-ico{font-size:22px;flex-shrink:0}
-.meal-info{flex:1;min-width:0}
-.meal-info strong{display:block;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.meal-info span{font-size:11px;color:var(--t2)}
-.meal-cals{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--g);flex-shrink:0}
-.del-btn{background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;padding:2px 4px;flex-shrink:0}
-.del-btn:hover{color:var(--red)}
-
-/* Goal reminder */
-.goal-tip{background:rgba(99,153,34,.08);border:1px solid rgba(99,153,34,.18);border-radius:var(--rs);padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--t2);display:flex;gap:10px;align-items:flex-start}
-.goal-tip span{font-size:18px;flex-shrink:0}
-
-/* Add food modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:flex-end;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal{background:var(--bg2);border-radius:20px 20px 0 0;width:100%;max-width:500px;padding:20px 20px 32px;max-height:85vh;overflow-y:auto}
-.modal-handle{width:36px;height:4px;background:var(--bdr2);border-radius:2px;margin:0 auto 18px}
-.modal h3{font-family:'Bebas Neue',sans-serif;font-size:24px;margin-bottom:16px}
-.quick-foods{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
-.qf{background:var(--bg3);border:1px solid var(--bdr);border-radius:20px;padding:6px 12px;font-size:12px;color:var(--t2);cursor:pointer;transition:all .15s}
-.qf:hover,.qf.sel{background:rgba(99,153,34,.12);border-color:var(--g);color:var(--gm)}
-.modal-fields{display:flex;flex-direction:column;gap:12px}
+.abar{flex-shrink:0;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bdr)}
+.al{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.07em}.al span{color:var(--gold)}
+.sc2{display:flex;align-items:center;gap:5px;border:1px solid var(--bdr3);border-radius:16px;padding:5px 12px;font-size:12px;color:var(--gold);background:var(--gold3)}
+.ascroll{flex:1;overflow-y:auto;padding-bottom:72px}
+.tp2{display:none;padding:20px}.tp2.active{display:block}
+.bnav{flex-shrink:0;position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--bdr2);display:flex;height:66px;z-index:100}
+.bt{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:none;background:none;color:var(--t3);transition:color .15s}
+.bt.on{color:var(--gold)}.bt .ico{font-size:20px}.bt .lbl{font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase}
+.phd{margin-bottom:22px}
+.phd h2{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:.02em;margin-bottom:4px}
+.phd p{font-size:13px;color:var(--t2);font-weight:300}
+.flds{display:flex;flex-direction:column;gap:14px;margin-bottom:22px}
+.fld{display:flex;flex-direction:column;gap:5px}
+.fld label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t3)}
+.fld select{padding:12px 14px;background:var(--bg2);border:1px solid var(--bdr2);border-radius:var(--rs);color:var(--cream);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:34px}
+.fld select:focus{border-color:var(--gold)}.fld select option{background:var(--bg2)}
+.eqg{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.eqc{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rs);cursor:pointer;font-size:12px;color:var(--t2);font-weight:300;user-select:none;transition:all .15s}
+.eqc.on{border-color:var(--gold);color:var(--gold);background:var(--gold3)}
+.eqd{width:13px;height:13px;border:1.5px solid var(--t3);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.eqc.on .eqd{background:var(--gold);border-color:var(--gold)}
+.eqc.on .eqd::after{content:'';width:4px;height:4px;background:#0C0C0C;border-radius:50%;display:block}
+.gbtn{width:100%;padding:16px;background:var(--gold);color:#0C0C0C;border:none;border-radius:var(--rs);font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.1em;cursor:pointer}
+.gbtn:disabled{background:var(--bg3);color:var(--t3);cursor:not-allowed}
+.lbox{text-align:center;padding:60px 20px}
+.ldots{display:inline-flex;gap:6px;margin-bottom:20px}
+.ld{width:8px;height:8px;background:var(--gold);border-radius:50%;animation:ldp 1.3s infinite ease-in-out;opacity:.3}
+.ld:nth-child(2){animation-delay:.15s}.ld:nth-child(3){animation-delay:.3s}
+@keyframes ldp{0%,80%,100%{opacity:.3;transform:scale(.7)}40%{opacity:1;transform:scale(1)}}
+.lbox p{font-size:14px;color:var(--t2);font-weight:300}.lbox small{font-size:12px;color:var(--t3);display:block;margin-top:6px}
+.rin{animation:fup .4s ease}
+@keyframes fup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.rmeta{display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:14px;margin-bottom:16px}
+.rtick{width:36px;height:36px;border-radius:50%;background:var(--gold3);border:1px solid var(--bdr3);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;color:var(--gold)}
+.rmeta strong{display:block;font-size:14px}.rmeta span{font-size:12px;color:var(--t2);font-weight:300}
+.pb{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.pb-hd{padding:13px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:9px}
+.pb-hd .e{font-size:16px}.pb-hd strong{font-size:13px;font-weight:500;letter-spacing:.02em;text-transform:uppercase}
+.pb-hd .ptag{margin-left:auto;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:var(--gold3);padding:2px 8px;border-radius:6px}
+.pb-bd{padding:14px 16px;font-size:13px;line-height:1.9;color:var(--t2);white-space:pre-wrap;font-weight:300}
+.npbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:13px;background:none;border:1px solid var(--bdr2);border-radius:var(--rs);color:var(--t2);font-size:13px;cursor:pointer;margin-top:8px;font-family:'DM Sans',sans-serif;font-weight:300}
+.npbtn:hover{border-color:var(--gold);color:var(--gold)}
+.dnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.dnav button{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rs);padding:8px 14px;color:var(--cream);font-size:16px;cursor:pointer}
+.dnav strong{font-size:14px;font-weight:500}
+.rc{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:22px;margin-bottom:14px;text-align:center}
+.rw{position:relative;width:120px;height:120px;margin:0 auto 18px}
+.rsvg{transform:rotate(-90deg)}
+.rbg{fill:none;stroke:var(--bg3);stroke-width:10}
+.rfill{fill:none;stroke:var(--gold);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .5s ease}
+.rlbl{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;line-height:1}
+.rlbl .rn{font-family:'Bebas Neue',sans-serif;font-size:26px}.rlbl .ru{font-size:10px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em}.rlbl .rg{font-size:10px;color:var(--t3);margin-top:2px}
+.mr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.mc{background:var(--bg3);border-radius:var(--rs);padding:11px;text-align:center}
+.mc .mv{font-size:18px;font-weight:600;margin-bottom:2px}.mc .ml{font-size:9px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.mc .mb{height:3px;background:var(--bg4);border-radius:2px;overflow:hidden}.mc .mf{height:100%;border-radius:2px;transition:width .4s}
+.mc-p .mv{color:var(--blue)}.mc-p .mf{background:var(--blue)}
+.mc-c .mv{color:var(--orange)}.mc-c .mf{background:var(--orange)}
+.mc-f .mv{color:var(--red)}.mc-f .mf{background:var(--red)}
+.tipb{background:var(--gold3);border:1px solid var(--bdr3);border-radius:var(--rs);padding:11px 14px;margin:14px 0;font-size:12px;color:var(--gold);display:flex;gap:8px;align-items:flex-start;font-weight:300}
+.lhd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.lhd h3{font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+.addbtn{display:flex;align-items:center;gap:5px;background:var(--gold3);border:1px solid var(--bdr3);color:var(--gold);border-radius:16px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer}
+.fe{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--rs);padding:12px 14px;margin-bottom:7px}
+.fi2{font-size:20px;flex-shrink:0}
+.fin{flex:1;min-width:0}
+.fin strong{display:block;font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fin span{font-size:11px;color:var(--t2);font-weight:300}
+.fcal{font-family:'Bebas Neue',sans-serif;font-size:19px;color:var(--gold);flex-shrink:0}
+.fdel{background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer;padding:2px 4px}
+.fdel:hover{color:var(--red)}
+.empty{text-align:center;padding:40px 20px;color:var(--t2)}
+.empty .ei{font-size:36px;margin-bottom:12px;opacity:.5}.empty p{font-size:13px;font-weight:300}
+.stg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.stc{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:16px}
+.stc .sv{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold);line-height:1;margin-bottom:4px}
+.stc .sl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--t2)}
+.psec h3{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:10px}
+.pcard{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;margin-bottom:10px}
+.pr{display:flex;align-items:center;gap:14px;padding:14px 16px;border-bottom:1px solid var(--bdr)}
+.pr:last-child{border:none}
+.pr .pi{font-size:16px;flex-shrink:0}.pr .pt{flex:1}
+.pr .pt strong{display:block;font-size:13px;font-weight:500;margin-bottom:1px}
+.pr .pt span{font-size:11px;color:var(--t2);font-weight:300}.pr .pv{font-size:13px;color:var(--t2);font-weight:300}
+.gbtn2{width:100%;padding:13px;background:var(--gold);color:#0C0C0C;border:none;border-radius:var(--rs);font-size:13px;font-weight:700;cursor:pointer;margin-top:10px;margin-bottom:22px}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:flex-end;justify-content:center}
+.ov.open{display:flex}
+.modal{background:var(--bg2);border-radius:20px 20px 0 0;width:100%;max-width:500px;padding:18px 20px 36px;max-height:90vh;overflow-y:auto}
+.mh{width:34px;height:4px;background:var(--bdr2);border-radius:2px;margin:0 auto 18px}
+.modal h3{font-family:'Bebas Neue',sans-serif;font-size:26px;margin-bottom:16px;letter-spacing:.03em}
+.qf2{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.qfi{background:var(--bg3);border:1px solid var(--bdr);border-radius:16px;padding:5px 12px;font-size:12px;color:var(--t2);cursor:pointer;font-weight:300;transition:all .15s}
+.qfi:hover{border-color:var(--gold);color:var(--gold);background:var(--gold3)}
+.mflds{display:flex;flex-direction:column;gap:11px}
 .mf{display:flex;flex-direction:column;gap:5px}
-.mf label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--t2)}
-.mf input{padding:11px 14px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--rs);color:var(--t);font-size:14px;outline:none}
-.mf input:focus{border-color:var(--g)}
-.modal-actions{display:flex;gap:10px;margin-top:18px}
-.modal-actions button{flex:1;padding:13px;border:none;border-radius:var(--rs);font-size:14px;font-weight:700;cursor:pointer;transition:all .15s}
-.modal-actions .cancel{background:var(--bg3);color:var(--t2)}
-.modal-actions .confirm{background:var(--g);color:#fff}
-
-/* ── TAB 3: PROFILE ── */
-.profile-sec{margin-bottom:20px}
-.profile-sec h3{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--t2);margin-bottom:10px}
-.prof-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden}
-.prof-row{display:flex;align-items:center;gap:14px;padding:14px 16px;border-bottom:1px solid var(--bdr)}
-.prof-row:last-child{border:none}
-.prof-row .icon{font-size:18px;flex-shrink:0}
-.prof-row .info{flex:1}
-.prof-row .info strong{display:block;font-size:13px;font-weight:600}
-.prof-row .info span{font-size:12px;color:var(--t2)}
-.prof-row .val{font-size:13px;color:var(--t2)}
-.goal-set-btn{width:100%;padding:13px;background:var(--g);color:#fff;border:none;border-radius:var(--rs);font-size:14px;font-weight:700;cursor:pointer;margin-top:10px}
-
-/* Stats */
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
-.stat-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:16px}
-.stat-card .sv{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--g);line-height:1;margin-bottom:4px}
-.stat-card .sl{font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-
-/* Shared */
-.section-divider{height:1px;background:var(--bdr);margin:24px 0}
-.empty-state{text-align:center;padding:40px 20px;color:var(--t2)}
-.empty-state .ei{font-size:40px;margin-bottom:12px}
-.empty-state p{font-size:14px}
-
-/* Install banner */
-#inst-banner{display:none;position:fixed;bottom:68px;left:12px;right:12px;background:var(--bg2);border:1px solid var(--bdr2);border-radius:var(--r);padding:12px 14px;z-index:150;align-items:center;gap:10px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
-#inst-banner.show{display:flex}
-.ib-ico{width:36px;height:36px;background:var(--g);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.ib-text{flex:1}
-.ib-text strong{display:block;font-size:13px;font-weight:600}
-.ib-text span{font-size:11px;color:var(--t2)}
-.ib-btn{background:var(--g);color:#fff;border:none;border-radius:var(--rs);padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
-.ib-close{background:none;border:none;color:var(--t2);font-size:18px;cursor:pointer}
+.mf label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+.mf input{padding:11px 14px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--rs);color:var(--cream);font-size:14px;font-family:'DM Sans',sans-serif;outline:none}
+.mf input:focus{border-color:var(--gold)}
+.mf2g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.macts{display:flex;gap:10px;margin-top:16px}
+.macts button{flex:1;padding:13px;border:none;border-radius:var(--rs);font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+.mcancel{background:var(--bg3);color:var(--t2)}.mok{background:var(--gold);color:#0C0C0C}
+#ib{display:none;position:fixed;bottom:74px;left:12px;right:12px;background:var(--bg2);border:1px solid var(--bdr3);border-radius:var(--r);padding:12px 14px;z-index:150;align-items:center;gap:10px}
+#ib.show{display:flex}
+.ib-ico{width:36px;height:36px;background:var(--gold3);border:1px solid var(--bdr3);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ib-t{flex:1}.ib-t strong{display:block;font-size:13px;font-weight:500}.ib-t span{font-size:11px;color:var(--t2);font-weight:300}
+.ib-btn{background:var(--gold);color:#0C0C0C;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+.ib-x{background:none;border:none;color:var(--t3);font-size:18px;cursor:pointer}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
 
-<!-- ─── LANDING ─── -->
 <div id="s-landing" class="screen active">
-  <nav class="nav">
-    <div class="nav-logo">FitCoach <span>AI</span></div>
-    <button class="nav-cta" onclick="goTo('pay','monthly')">Get Started</button>
-  </nav>
-
-  <section class="hero">
-    <div class="badge"><span class="badge-dot"></span>AI-Powered Fitness</div>
-    <h1>YOUR<br><em>COMPLETE</em><br>FITNESS APP</h1>
-    <p>AI workout & meal plans + daily calorie tracker — everything you need to transform your body.</p>
-    <div class="pill-row">
-      <div class="pill"><span>🏋️</span> AI Workout Plans</div>
-      <div class="pill"><span>🥗</span> Meal Plans</div>
-      <div class="pill"><span>🔥</span> Calorie Tracker</div>
-      <div class="pill"><span>📊</span> Macro Tracking</div>
-    </div>
-    <div class="price-box">
-      <div class="amt">₹199</div>
-      <div class="pinfo"><strong>Per month</strong><span>Cancel anytime</span></div>
-    </div>
-    <button class="hero-btn" onclick="goTo('pay','monthly')">Start My Fitness Journey →</button>
-  </section>
-
-  <div class="strip">
-    <div class="strip-card"><div class="ico">🤖</div><h3>AI Plans</h3><p>Personalized workout generated in seconds</p></div>
-    <div class="strip-card"><div class="ico">🔥</div><h3>Calorie Tracker</h3><p>Log meals, track macros daily</p></div>
-    <div class="strip-card"><div class="ico">🥗</div><h3>Meal Plans</h3><p>Full day nutrition with macros</p></div>
-    <div class="strip-card"><div class="ico">📱</div><h3>Works Offline</h3><p>Use anywhere, no internet needed</p></div>
-    <div class="strip-card"><div class="ico">🇮🇳</div><h3>Made for India</h3><p>UPI, cards & net banking</p></div>
+  <div class="top-bar"><div class="logo">FitCoach <span>AI</span></div><button class="top-cta" onclick="goto('pay','monthly')">Start Now</button></div>
+  <div class="hero">
+    <div class="htag">AI-Powered · Made in India</div>
+    <h1>YOUR<br><em>COMPLETE</em><br>FITNESS<br>COACH</h1>
+    <p class="hsub">Personalised AI workout plans, meal plans & calorie tracker. Everything you need. Nothing you don't.</p>
+    <div class="pstrip"><div class="pamt">₹199</div><div class="pinfo"><strong>per month</strong><span>Cancel anytime</span></div></div>
+    <button class="hero-cta" onclick="goto('pay','monthly')">Get Started →</button>
+    <div class="tpills"><div class="tp">UPI Accepted</div><div class="tp">Instant Access</div><div class="tp">Works Offline</div></div>
   </div>
+  <div class="sect">
+    <div class="slbl">What you get</div><h2 class="sh">Three tools.<br>One app.</h2>
+    <div class="flist">
+      <div class="fi"><div class="fi-ico">🏋️</div><div><strong>AI Workout Plans</strong><span>Personalised weekly schedule built for your goal, level & equipment</span></div><div class="fi-arr">›</div></div>
+      <div class="fi"><div class="fi-ico">🥗</div><div><strong>AI Meal Plans</strong><span>Full day nutrition with macro breakdown, tailored to your goal</span></div><div class="fi-arr">›</div></div>
+      <div class="fi"><div class="fi-ico">🔥</div><div><strong>Calorie Tracker</strong><span>Log meals daily, track protein, carbs & fat with a visual ring</span></div><div class="fi-arr">›</div></div>
+      <div class="fi"><div class="fi-ico">📴</div><div><strong>Works Offline</strong><span>No internet needed after first load. Your data stays on your phone</span></div><div class="fi-arr">›</div></div>
+    </div>
+  </div>
+  <div class="demo-sect">
+    <div class="slbl">Sample output</div><h2 class="sh" style="margin-bottom:16px">What your AI plan<br>looks like</h2>
+    <div class="dc"><div class="dc-hd"><div class="di">🏋️</div><strong>Weekly Workout Plan</strong><div class="dtag">Beginner · Lose Weight</div></div>
+    <div class="dc-bd"><span class="dlbl">Day 1 — Full Body Strength</span><strong>Push-ups</strong> · 4 sets × 12 reps
+<strong>Bodyweight Squats</strong> · 4 sets × 15 reps
+<strong>Plank Hold</strong> · 3 sets × 30 seconds
+<strong>Glute Bridge</strong> · 3 sets × 15 reps
+<strong>Mountain Climbers</strong> · 3 sets × 20 reps
+<span class="dlbl" style="margin-top:12px">Day 2 — Cardio & Core</span><strong>Jump Rope / Jog</strong> · 20 minutes steady pace
+<strong>Bicycle Crunches</strong> · 3 sets × 20 reps
+<strong>Leg Raises</strong> · 3 sets × 12 reps
+<strong>Burpees</strong> · 3 sets × 10 reps
+<strong>Side Plank</strong> · 2 sets × 20 sec each side</div></div>
+    <div class="dc" style="margin-top:10px"><div class="dc-hd"><div class="di">🥗</div><strong>Daily Meal Plan</strong><div class="dtag">1,650 kcal</div></div>
+    <div class="dc-bd"><span class="dlbl">Breakfast · 7:00 AM · 430 kcal</span><strong>Oats</strong> (50g) + Banana + 2 boiled eggs
+Protein: 28g · Carbs: 55g · Fat: 9g
+<span class="dlbl">Lunch · 1:00 PM · 520 kcal</span><strong>Brown rice</strong> + Dal + Chicken breast (100g)
+Protein: 42g · Carbs: 50g · Fat: 10g
+<span class="dlbl">Dinner · 7:30 PM · 480 kcal</span><strong>2 Rotis</strong> + Paneer sabzi + Curd
+Protein: 24g · Carbs: 48g · Fat: 14g</div></div>
+    <div class="dc" style="margin-top:10px"><div class="dc-hd"><div class="di">💡</div><strong>Pro Tips</strong><div class="dtag">For You</div></div>
+    <div class="dc-bd">1. <strong>Progressive overload</strong> — Add 1-2 reps each week. Your muscles adapt fast.
 
-  <!-- App mockups -->
-  <section class="mockup-section">
-    <div class="sec-label">The App</div>
-    <h2 class="sec-h">Everything in<br>one place</h2>
-    <p class="sec-p">Three powerful tools. One beautiful app.</p>
-    <div class="phones">
-      <div class="phone-frame">
-        <div class="phone-notch"></div>
-        <div class="phone-body">
-          <div class="pscreen-title">AI PLAN</div>
-          <div style="height:4px"></div>
-          <div class="pscreen-list-item"></div>
-          <div class="pscreen-list-item" style="width:80%"></div>
-          <div class="pscreen-list-item"></div>
-          <div class="pscreen-list-item" style="width:90%"></div>
-          <div class="pscreen-list-item"></div>
-          <div style="height:4px"></div>
-          <div style="height:28px;background:var(--g);border-radius:6px"></div>
-        </div>
-      </div>
-      <div class="phone-frame" style="border-color:rgba(99,153,34,.4)">
-        <div class="phone-notch"></div>
-        <div class="phone-body">
-          <div class="pscreen-title">CALORIES</div>
-          <div style="text-align:center;margin:6px 0">
-            <div style="width:60px;height:60px;border-radius:50%;border:5px solid var(--g);margin:0 auto;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--g)">1240</div>
-          </div>
-          <div class="pscreen-macro">
-            <div class="macro-dot" style="background:#5285e0;opacity:.7"></div>
-            <div class="macro-dot" style="background:#e08a25;opacity:.7"></div>
-            <div class="macro-dot" style="background:#e05252;opacity:.7"></div>
-          </div>
-          <div style="height:6px"></div>
-          <div class="pscreen-list-item" style="height:18px"></div>
-          <div class="pscreen-list-item" style="height:18px;width:85%"></div>
-        </div>
-      </div>
-      <div class="phone-frame">
-        <div class="phone-notch"></div>
-        <div class="phone-body">
-          <div class="pscreen-title">PROFILE</div>
-          <div style="height:4px"></div>
-          <div class="pscreen-row"><div class="pscreen-col"></div><div class="pscreen-col"></div></div>
-          <div style="height:5px"></div>
-          <div class="pscreen-bar"><div class="fill" style="width:70%"></div></div>
-          <div style="height:5px"></div>
-          <div class="pscreen-list-item" style="height:18px"></div>
-          <div class="pscreen-list-item" style="height:18px;width:75%"></div>
-          <div class="pscreen-list-item" style="height:18px;width:90%"></div>
-        </div>
-      </div>
-    </div>
-  </section>
+2. <strong>Protein first</strong> — Start every meal with protein. Keeps you full, reduces total calories eaten.
 
-  <!-- Pricing -->
-  <section class="pricing">
-    <div class="sec-label">Pricing</div>
-    <h2 class="sec-h">Simple, fair pricing</h2>
-    <div class="plan-cards">
-      <div class="plan-card">
-        <h3>Single Plan</h3>
-        <div class="plan-price">₹99 <span>one-time</span></div>
-        <ul class="plan-list">
-          <li>1 AI Workout Plan</li>
-          <li>1 AI Meal Plan</li>
-          <li>3 days calorie tracking</li>
-        </ul>
-        <button class="plan-btn outline" onclick="goTo('pay','single')">Get Single Plan</button>
-      </div>
-      <div class="plan-card featured">
-        <div class="feat-tag">Most Popular</div>
-        <h3>Monthly</h3>
-        <div class="plan-price">₹199 <span>/ month</span></div>
-        <ul class="plan-list">
-          <li>Unlimited AI Plans</li>
-          <li>Daily Calorie Tracker</li>
-          <li>Macro tracking</li>
-          <li>Works offline</li>
-          <li>Cancel anytime</li>
-        </ul>
-        <button class="plan-btn primary" onclick="goTo('pay','monthly')">Start Monthly →</button>
-      </div>
+3. <strong>Sleep 7-8 hours</strong> — Fat loss happens during sleep. Poor sleep raises cortisol, which stores belly fat.</div></div>
+  </div>
+  <div class="sect" style="background:var(--bg2)">
+    <div class="slbl">How it works</div><h2 class="sh">Ready in 3 steps</h2><p class="sp">Pay once, get instant access.</p>
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div><strong>Pay ₹199</strong><p>UPI, debit/credit card, or net banking through Instamojo</p></div></div>
+      <div class="step"><div class="snum">2</div><div><strong>Enter your details</strong><p>Goal, fitness level, age, days available, equipment</p></div></div>
+      <div class="step"><div class="snum">3</div><div><strong>Get your plan instantly</strong><p>AI generates your personalised plan in under 20 seconds</p></div></div>
     </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="faq">
-    <div class="sec-label">FAQs</div>
-    <h2 class="sec-h" style="margin-bottom:20px">Common questions</h2>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Do I need to download an app? <span class="arrow">▼</span></div>
-      <div class="faq-a">No! FitCoach AI is a Progressive Web App. On Android, you'll see an "Add to Home Screen" prompt automatically. On iPhone, tap the Share button and choose "Add to Home Screen". It installs like a native app, completely free.</div>
+  </div>
+  <div class="pw">
+    <div class="slbl">Pricing</div><h2 class="sh">Simple pricing</h2>
+    <div class="pstack">
+      <div class="pbox"><div class="pn">Single Plan</div><div class="pp">₹99 <span>one-time</span></div><ul class="pperks"><li>1 AI Workout Plan</li><li>1 AI Meal Plan</li><li>3 days calorie tracking</li></ul><button class="pbtn ghost" onclick="goto('pay','single')">Get Single Plan</button></div>
+      <div class="pbox best"><div class="bbadge">Most Popular</div><div class="pn">Monthly</div><div class="pp">₹199 <span>/ month</span></div><ul class="pperks"><li>Unlimited AI Plans</li><li>Daily Calorie Tracker</li><li>Macro tracking</li><li>Works offline</li><li>Streak tracker</li></ul><button class="pbtn gold" onclick="goto('pay','monthly')">Start Monthly →</button></div>
     </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">How does the calorie tracker work? <span class="arrow">▼</span></div>
-      <div class="faq-a">Log any food with its calories and macros (protein, carbs, fat). The app shows a visual daily summary with a calorie ring and macro breakdown. Your data is saved on your device.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Can I pay with UPI? <span class="arrow">▼</span></div>
-      <div class="faq-a">Yes! We accept UPI, debit/credit cards, and net banking through Instamojo — India's most trusted payment platform. Instant activation after payment.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">How accurate are the AI plans? <span class="arrow">▼</span></div>
-      <div class="faq-a">Plans are generated by Claude (Anthropic's AI) and tailored to your exact goal, fitness level, age, and equipment. They follow scientifically sound principles, though we recommend consulting a doctor before starting a new fitness program.</div>
-    </div>
-  </section>
-
-  <footer>
-    <p>FitCoach AI · Made with ❤️ in Hyderabad, India<br>
-    <a href="mailto:hello@fitcoachai.in">hello@fitcoachai.in</a> · <a href="#">Privacy Policy</a> · <a href="#">Terms</a></p>
-  </footer>
+  </div>
+  <div class="faqw">
+    <div class="slbl">Questions</div><h2 class="sh" style="margin-bottom:20px">FAQs</h2>
+    <div class="fqi" onclick="tfaq(this)"><div class="fqq">Do I need to download anything? <span class="farr">▼</span></div><div class="fqa">No download needed. On Android, tap "Add to Home Screen" when prompted. On iPhone, tap Share → Add to Home Screen. Installs like a native app, completely free.</div></div>
+    <div class="fqi" onclick="tfaq(this)"><div class="fqq">How does the calorie tracker work? <span class="farr">▼</span></div><div class="fqa">Log any food with calories and macros. See a daily ring with protein, carbs and fat breakdown. All data saved on your device — no account needed.</div></div>
+    <div class="fqi" onclick="tfaq(this)"><div class="fqq">Do you accept UPI? <span class="farr">▼</span></div><div class="fqa">Yes — UPI, debit/credit cards, and net banking through Instamojo. Money hits your bank account directly in INR.</div></div>
+    <div class="fqi" onclick="tfaq(this)"><div class="fqq">How accurate are the AI plans? <span class="farr">▼</span></div><div class="fqa">Plans are generated by Claude AI, tailored to your exact inputs. They follow proven training principles. Consult a doctor before starting any new fitness programme.</div></div>
+  </div>
+  <footer><p>FitCoach AI · Proudly built in Hyderabad, India 🇮🇳<br><a href="mailto:hello@fitcoachai.in">hello@fitcoachai.in</a> &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms</a></p></footer>
 </div>
 
-<!-- ─── PAYMENT ─── -->
 <div id="s-pay" class="screen">
-  <div class="pay-wrap">
-    <button class="back" onclick="goTo('landing')">← Back</button>
-    <h2>Complete Order</h2>
-    <p>One-time payment · No hidden fees · Instant access</p>
-    <div class="summary" id="pay-summary">
-      <div class="sum-row"><span>FitCoach AI — Monthly Plan</span><strong>₹199</strong></div>
-      <div class="sum-row"><span>Access</span><strong>30 days</strong></div>
-      <div class="sum-row"><span>Total</span><strong class="sum-total" id="pay-total">₹199</strong></div>
+  <div class="inner">
+    <button class="back" onclick="goto('landing')">← Back</button>
+    <div class="pay-h">Complete Order</div>
+    <p class="pay-s">One-time · No hidden charges · Instant access</p>
+    <div class="obox" id="obox">
+      <div class="or"><span>FitCoach AI — Monthly</span><strong>₹199</strong></div>
+      <div class="or"><span>Duration</span><strong>30 days</strong></div>
+      <div class="or"><span>Total</span><strong class="otv">₹199</strong></div>
     </div>
-    <div class="pay-opts">
-      <a class="pay-opt" href="YOUR_INSTAMOJO_LINK" id="btn-imojo" onclick="handlePay(event,'instamojo')">
-        <div class="opt-ico in">🇮🇳</div>
-        <div class="opt-text"><strong>UPI / Cards / Net Banking</strong><span>Powered by Instamojo · Direct bank payout</span></div>
-        <span class="opt-badge in">India</span>
+    <div class="pms">
+      <a class="pm" href="YOUR_INSTAMOJO_LINK" onclick="hp(event,'instamojo')">
+        <div class="pm-ico">🇮🇳</div><div class="pm-t"><strong>UPI / Cards / Net Banking</strong><span>Instamojo · Direct INR to your bank</span></div><span class="pm-b">India</span>
       </a>
-      <a class="pay-opt" href="YOUR_GUMROAD_LINK" id="btn-gumroad" onclick="handlePay(event,'gumroad')">
-        <div class="opt-ico gl">🌍</div>
-        <div class="opt-text"><strong>International Card</strong><span>Powered by Gumroad · PayPal payout</span></div>
-        <span class="opt-badge gl">Global</span>
+      <a class="pm" href="YOUR_GUMROAD_LINK" onclick="hp(event,'gumroad')">
+        <div class="pm-ico">🌍</div><div class="pm-t"><strong>International Card</strong><span>Gumroad · PayPal payout</span></div><span class="pm-b gl">Global</span>
       </a>
     </div>
-    <button class="demo-skip" onclick="goTo('app')">🔧 Demo — Skip Payment (Remove before launch)</button>
-    <p class="pay-note">Secure payment · <a href="#">Refund Policy</a> · Questions? <a href="mailto:hello@fitcoachai.in">Email us</a></p>
+    <button class="dbtn" onclick="goto('app')">🔧 Demo Mode — Remove before launch</button>
+    <p class="pnote">Secure payment &nbsp;·&nbsp; <a href="#">Refund Policy</a> &nbsp;·&nbsp; <a href="mailto:hello@fitcoachai.in">Email us</a></p>
   </div>
 </div>
 
-<!-- ─── APP ─── -->
 <div id="s-app" class="screen">
-  <div class="app-top">
-    <div class="logo">FitCoach <span>AI</span></div>
-    <div class="streak">🔥 <span id="streak-count">0</span> day streak</div>
-  </div>
-
-  <div class="app-content">
-    <!-- TAB: AI PLANS -->
-    <div id="tab-plans" class="tab-panel active">
-      <div id="plans-form">
-        <div class="panel-head"><h2>Build Your Plan</h2><p>Tell us about yourself for a 100% personalized plan</p></div>
-        <div class="form-fields">
-          <div class="ff"><label>Your Goal</label>
-            <select id="p-goal">
-              <option value="lose weight and burn fat">Lose Weight & Burn Fat</option>
-              <option value="build muscle mass">Build Muscle Mass</option>
-              <option value="improve endurance and stamina">Improve Endurance</option>
-              <option value="tone up and get lean">Tone Up & Get Lean</option>
-              <option value="maintain fitness and stay healthy">Stay Active & Healthy</option>
-            </select>
-          </div>
-          <div class="ff"><label>Fitness Level</label>
-            <select id="p-level">
-              <option value="beginner (just starting out, 0-3 months experience)">Beginner</option>
-              <option value="intermediate (6+ months of regular training)">Intermediate</option>
-              <option value="advanced (2+ years of consistent training)">Advanced</option>
-            </select>
-          </div>
-          <div class="ff"><label>Training Days / Week</label>
-            <select id="p-days"><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option></select>
-          </div>
-          <div class="ff"><label>Age Group</label>
-            <select id="p-age"><option value="18-25">18–25</option><option value="26-35">26–35</option><option value="36-45">36–45</option><option value="46+">46+</option></select>
-          </div>
-          <div class="ff"><label>Equipment Available</label>
-            <div class="chips" id="equip-chips">
-              <div class="chip" data-v="dumbbells"><span class="ck"></span>Dumbbells</div>
-              <div class="chip" data-v="barbell & plates"><span class="ck"></span>Barbell</div>
-              <div class="chip" data-v="resistance bands"><span class="ck"></span>Bands</div>
-              <div class="chip" data-v="pull-up bar"><span class="ck"></span>Pull-up bar</div>
-              <div class="chip" data-v="gym machines"><span class="ck"></span>Gym machines</div>
-              <div class="chip on" data-v="bodyweight only"><span class="ck"></span>Bodyweight</div>
+  <div class="abar"><div class="al">FitCoach <span>AI</span></div><div class="sc2">🔥 <span id="sc">0</span> day streak</div></div>
+  <div class="ascroll">
+    <div id="tp-plans" class="tp2 active">
+      <div id="pform">
+        <div class="phd"><h2>Build Your Plan</h2><p>100% personalised for you</p></div>
+        <div class="flds">
+          <div class="fld"><label>Your Goal</label><select id="pg"><option value="lose weight and burn fat">Lose Weight & Burn Fat</option><option value="build muscle mass">Build Muscle Mass</option><option value="improve endurance and stamina">Improve Endurance</option><option value="tone up and get lean">Tone Up & Get Lean</option><option value="maintain fitness">Stay Active & Healthy</option></select></div>
+          <div class="fld"><label>Fitness Level</label><select id="pl"><option value="beginner (0-3 months experience)">Beginner</option><option value="intermediate (6+ months experience)">Intermediate</option><option value="advanced (2+ years experience)">Advanced</option></select></div>
+          <div class="fld"><label>Training Days / Week</label><select id="pd"><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option></select></div>
+          <div class="fld"><label>Age Group</label><select id="pa"><option value="18-25">18–25</option><option value="26-35">26–35</option><option value="36-45">36–45</option><option value="46+">46+</option></select></div>
+          <div class="fld"><label>Equipment</label>
+            <div class="eqg">
+              <div class="eqc" data-v="dumbbells"><span class="eqd"></span>Dumbbells</div>
+              <div class="eqc" data-v="barbell"><span class="eqd"></span>Barbell</div>
+              <div class="eqc" data-v="resistance bands"><span class="eqd"></span>Bands</div>
+              <div class="eqc" data-v="pull-up bar"><span class="eqd"></span>Pull-up bar</div>
+              <div class="eqc" data-v="gym machines"><span class="eqd"></span>Gym machines</div>
+              <div class="eqc on" data-v="bodyweight only"><span class="eqd"></span>Bodyweight</div>
             </div>
           </div>
         </div>
-        <button class="gen-btn" onclick="genPlan()">Generate My Plan →</button>
+        <button class="gbtn" onclick="genPlan()">Generate My Plan →</button>
       </div>
-      <div id="plans-loading" class="hidden"><div class="loader-box"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><p id="load-msg">Crafting your workout...</p><small>~15-20 seconds</small></div></div>
-      <div id="plans-result" class="hidden result-anim"></div>
+      <div id="ploading" class="hidden"><div class="lbox"><div class="ldots"><div class="ld"></div><div class="ld"></div><div class="ld"></div></div><p id="lm">Crafting your workout...</p><small>About 15–20 seconds</small></div></div>
+      <div id="presult" class="hidden rin"></div>
     </div>
-
-    <!-- TAB: CALORIE TRACKER -->
-    <div id="tab-tracker" class="tab-panel">
-      <div class="panel-head"><h2>Calorie Tracker</h2><p>Track what you eat, hit your goals</p></div>
-      <div class="cal-date-nav">
-        <button onclick="changeDay(-1)">‹</button>
-        <strong id="cal-date-label">Today</strong>
-        <button onclick="changeDay(1)">›</button>
-      </div>
-      <div class="goal-tip"><span>💡</span><span id="cal-goal-tip">Set your daily calorie goal in Profile to track progress.</span></div>
-      <div class="cal-ring-wrap">
-        <div class="cal-ring-card">
-          <div class="ring-container">
-            <svg class="ring-svg" viewBox="0 0 130 130" width="130" height="130">
-              <circle class="ring-bg" cx="65" cy="65" r="55"/>
-              <circle class="ring-fill" id="cal-ring" cx="65" cy="65" r="55" stroke-dasharray="345.4" stroke-dashoffset="345.4"/>
-            </svg>
-            <div class="ring-label">
-              <div class="cal-num" id="cal-consumed">0</div>
-              <div class="cal-unit">kcal</div>
-              <div class="cal-goal" id="cal-goal-label">of 2000</div>
-            </div>
-          </div>
-          <div class="macro-row">
-            <div class="macro-card m-pro">
-              <div class="m-lbl">Protein</div>
-              <div class="m-val" id="m-pro">0g</div>
-              <div class="macro-bar"><div class="mfill" id="mbar-pro" style="width:0%"></div></div>
-            </div>
-            <div class="macro-card m-carb">
-              <div class="m-lbl">Carbs</div>
-              <div class="m-val" id="m-carb">0g</div>
-              <div class="macro-bar"><div class="mfill" id="mbar-carb" style="width:0%"></div></div>
-            </div>
-            <div class="macro-card m-fat">
-              <div class="m-lbl">Fat</div>
-              <div class="m-val" id="m-fat">0g</div>
-              <div class="macro-bar"><div class="mfill" id="mbar-fat" style="width:0%"></div></div>
-            </div>
-          </div>
+    <div id="tp-tracker" class="tp2">
+      <div class="phd"><h2>Calorie Tracker</h2><p>Log what you eat, hit your goals</p></div>
+      <div class="dnav"><button onclick="chd(-1)">‹</button><strong id="dlbl">Today</strong><button onclick="chd(1)">›</button></div>
+      <div class="rc">
+        <div class="rw"><svg class="rsvg" viewBox="0 0 120 120" width="120" height="120"><circle class="rbg" cx="60" cy="60" r="50"/><circle class="rfill" id="cr" cx="60" cy="60" r="50" stroke-dasharray="314.2" stroke-dashoffset="314.2"/></svg>
+        <div class="rlbl"><div class="rn" id="cc">0</div><div class="ru">kcal</div><div class="rg" id="cgl">of 2000</div></div></div>
+        <div class="mr">
+          <div class="mc mc-p"><div class="ml">Protein</div><div class="mv" id="mp">0g</div><div class="mb"><div class="mf" id="mbp" style="width:0%"></div></div></div>
+          <div class="mc mc-c"><div class="ml">Carbs</div><div class="mv" id="mc2">0g</div><div class="mb"><div class="mf" id="mbc" style="width:0%"></div></div></div>
+          <div class="mc mc-f"><div class="ml">Fat</div><div class="mv" id="mf2">0g</div><div class="mb"><div class="mf" id="mbf" style="width:0%"></div></div></div>
         </div>
       </div>
-      <div class="meals-section">
-        <div class="meals-head"><h3>Food Log</h3><button class="add-meal-btn" onclick="openModal()">+ Add Food</button></div>
-        <div id="food-log"></div>
-      </div>
+      <div class="tipb" id="ctip">💡 Set your daily calorie goal in Profile.</div>
+      <div class="lhd"><h3>Food Log</h3><button class="addbtn" onclick="oad()">+ Add Food</button></div>
+      <div id="flog"></div>
     </div>
-
-    <!-- TAB: PROFILE -->
-    <div id="tab-profile" class="tab-panel">
-      <div class="panel-head"><h2>My Profile</h2><p>Your stats & settings</p></div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="sv" id="stat-plans">0</div><div class="sl">Plans Generated</div></div>
-        <div class="stat-card"><div class="sv" id="stat-streak">0🔥</div><div class="sl">Day Streak</div></div>
-        <div class="stat-card"><div class="sv" id="stat-calories">0</div><div class="sl">Cal Tracked Today</div></div>
-        <div class="stat-card"><div class="sv" id="stat-entries">0</div><div class="sl">Total Entries</div></div>
+    <div id="tp-profile" class="tp2">
+      <div class="phd"><h2>My Profile</h2><p>Your stats & settings</p></div>
+      <div class="stg">
+        <div class="stc"><div class="sv" id="stp">0</div><div class="sl">Plans Made</div></div>
+        <div class="stc"><div class="sv" id="sts">0🔥</div><div class="sl">Day Streak</div></div>
+        <div class="stc"><div class="sv" id="stc2">0</div><div class="sl">Cal Today</div></div>
+        <div class="stc"><div class="sv" id="ste">0</div><div class="sl">Food Entries</div></div>
       </div>
-      <div class="profile-sec">
-        <h3>Calorie Goal</h3>
-        <div class="prof-card">
-          <div class="prof-row"><div class="icon">🎯</div><div class="info"><strong>Daily Calorie Target</strong><span>Used in tracker</span></div><div class="val" id="goal-display">2000 kcal</div></div>
-          <div class="prof-row"><div class="icon">💪</div><div class="info"><strong>Protein Goal</strong><span>Grams per day</span></div><div class="val" id="pro-goal-display">150g</div></div>
-          <div class="prof-row"><div class="icon">🍞</div><div class="info"><strong>Carb Goal</strong><span>Grams per day</span></div><div class="val" id="carb-goal-display">200g</div></div>
-          <div class="prof-row"><div class="icon">🥑</div><div class="info"><strong>Fat Goal</strong><span>Grams per day</span></div><div class="val" id="fat-goal-display">65g</div></div>
+      <div class="psec">
+        <h3>Daily Goals</h3>
+        <div class="pcard">
+          <div class="pr"><div class="pi">🎯</div><div class="pt"><strong>Calorie Target</strong><span>Daily goal</span></div><div class="pv" id="gdc">2000 kcal</div></div>
+          <div class="pr"><div class="pi">💪</div><div class="pt"><strong>Protein</strong><span>Per day</span></div><div class="pv" id="gdp">150g</div></div>
+          <div class="pr"><div class="pi">🍞</div><div class="pt"><strong>Carbs</strong><span>Per day</span></div><div class="pv" id="gdca">200g</div></div>
+          <div class="pr"><div class="pi">🥑</div><div class="pt"><strong>Fat</strong><span>Per day</span></div><div class="pv" id="gdf">65g</div></div>
         </div>
-        <button class="goal-set-btn" onclick="openGoalModal()">Edit Goals</button>
+        <button class="gbtn2" onclick="ogm()">Edit Goals</button>
       </div>
-      <div class="profile-sec">
+      <div class="psec">
         <h3>App</h3>
-        <div class="prof-card">
-          <div class="prof-row"><div class="icon">📱</div><div class="info"><strong>Version</strong><span>FitCoach AI</span></div><div class="val">1.0.0</div></div>
-          <div class="prof-row"><div class="icon">🔒</div><div class="info"><strong>Data</strong><span>Stored on your device</span></div><div class="val">Private</div></div>
-          <div class="prof-row" style="cursor:pointer" onclick="if(confirm('Clear all data?')){localStorage.clear();location.reload()}"><div class="icon">🗑️</div><div class="info"><strong>Clear All Data</strong><span>Remove all logs & plans</span></div></div>
+        <div class="pcard">
+          <div class="pr"><div class="pi">📱</div><div class="pt"><strong>Version</strong><span>FitCoach AI</span></div><div class="pv">1.0</div></div>
+          <div class="pr"><div class="pi">🔒</div><div class="pt"><strong>Your data</strong><span>Device only, private</span></div><div class="pv">Private</div></div>
+          <div class="pr" style="cursor:pointer" onclick="if(confirm('Clear all data?')){localStorage.clear();location.reload()}"><div class="pi">🗑️</div><div class="pt"><strong>Clear All Data</strong><span>Reset the app</span></div></div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="bottom-nav">
-    <button class="nav-tab active" id="nav-plans" onclick="switchTab('plans')"><div class="ico">🏋️</div><div class="lbl">Plans</div></button>
-    <button class="nav-tab" id="nav-tracker" onclick="switchTab('tracker')"><div class="ico">🔥</div><div class="lbl">Tracker</div></button>
-    <button class="nav-tab" id="nav-profile" onclick="switchTab('profile')"><div class="ico">👤</div><div class="lbl">Profile</div></button>
+  <div class="bnav">
+    <button class="bt on" id="nav-plans" onclick="sw('plans')"><div class="ico">🏋️</div><div class="lbl">Plans</div></button>
+    <button class="bt" id="nav-tracker" onclick="sw('tracker')"><div class="ico">🔥</div><div class="lbl">Tracker</div></button>
+    <button class="bt" id="nav-profile" onclick="sw('profile')"><div class="ico">👤</div><div class="lbl">Profile</div></button>
   </div>
 </div>
 
-<!-- Add Food Modal -->
-<div class="modal-overlay" id="add-modal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <h3>Add Food</h3>
-    <div class="quick-foods">
-      <div class="qf" onclick="fillFood('Banana',89,1,23,0.3)">🍌 Banana</div>
-      <div class="qf" onclick="fillFood('Chicken Breast (100g)',165,31,0,3.6)">🍗 Chicken</div>
-      <div class="qf" onclick="fillFood('White Rice (1 cup)',200,4,44,0.4)">🍚 Rice</div>
-      <div class="qf" onclick="fillFood('Egg (boiled)',78,6,0.6,5)">🥚 Egg</div>
-      <div class="qf" onclick="fillFood('Roti (1 piece)',70,2.5,15,0.5)">🫓 Roti</div>
-      <div class="qf" onclick="fillFood('Dal (1 cup)',180,12,30,0.8)">🥣 Dal</div>
-      <div class="qf" onclick="fillFood('Paneer (100g)',265,18,3.4,20)">🧀 Paneer</div>
-      <div class="qf" onclick="fillFood('Whey Protein (1 scoop)',120,25,3,1.5)">🥤 Protein</div>
-      <div class="qf" onclick="fillFood('Oats (50g)',190,7,33,3)">🌾 Oats</div>
-      <div class="qf" onclick="fillFood('Milk (1 glass)',150,8,12,8)">🥛 Milk</div>
+<div class="ov" id="am">
+  <div class="modal"><div class="mh"></div><h3>Add Food</h3>
+  <div class="qf2">
+    <div class="qfi" onclick="fill('Banana',89,1,23,0.3)">🍌 Banana</div>
+    <div class="qfi" onclick="fill('Chicken Breast (100g)',165,31,0,3.6)">🍗 Chicken</div>
+    <div class="qfi" onclick="fill('Rice (1 cup)',200,4,44,0.4)">🍚 Rice</div>
+    <div class="qfi" onclick="fill('Boiled Egg',78,6,0.6,5)">🥚 Egg</div>
+    <div class="qfi" onclick="fill('Roti',70,2.5,15,0.5)">🫓 Roti</div>
+    <div class="qfi" onclick="fill('Dal (1 cup)',180,12,30,0.8)">🥣 Dal</div>
+    <div class="qfi" onclick="fill('Paneer (100g)',265,18,3.4,20)">🧀 Paneer</div>
+    <div class="qfi" onclick="fill('Whey Protein',120,25,3,1.5)">🥤 Protein</div>
+    <div class="qfi" onclick="fill('Oats (50g)',190,7,33,3)">🌾 Oats</div>
+    <div class="qfi" onclick="fill('Milk (1 glass)',150,8,12,8)">🥛 Milk</div>
+    <div class="qfi" onclick="fill('Almonds (30g)',175,6,6,15)">🥜 Almonds</div>
+    <div class="qfi" onclick="fill('Curd (150g)',90,6,7,4)">🥄 Curd</div>
+  </div>
+  <div class="mflds">
+    <div class="mf"><label>Food Name</label><input id="fn" type="text" placeholder="e.g. Grilled chicken"></div>
+    <div class="mf2g">
+      <div class="mf"><label>Calories</label><input id="fc" type="number" placeholder="200"></div>
+      <div class="mf"><label>Protein (g)</label><input id="fp" type="number" placeholder="20"></div>
+      <div class="mf"><label>Carbs (g)</label><input id="fca" type="number" placeholder="30"></div>
+      <div class="mf"><label>Fat (g)</label><input id="ff" type="number" placeholder="5"></div>
     </div>
-    <div class="modal-fields">
-      <div class="mf"><label>Food Name</label><input id="f-name" type="text" placeholder="e.g. Chicken breast"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div class="mf"><label>Calories (kcal)</label><input id="f-cal" type="number" placeholder="200"></div>
-        <div class="mf"><label>Protein (g)</label><input id="f-pro" type="number" placeholder="20"></div>
-        <div class="mf"><label>Carbs (g)</label><input id="f-carb" type="number" placeholder="30"></div>
-        <div class="mf"><label>Fat (g)</label><input id="f-fat" type="number" placeholder="5"></div>
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="cancel" onclick="closeModal()">Cancel</button>
-      <button class="confirm" onclick="addFood()">Add to Log</button>
-    </div>
+  </div>
+  <div class="macts"><button class="mcancel" onclick="cam()">Cancel</button><button class="mok" onclick="af()">Add to Log</button></div>
   </div>
 </div>
 
-<!-- Goal Modal -->
-<div class="modal-overlay" id="goal-modal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <h3>Set Daily Goals</h3>
-    <div class="modal-fields">
-      <div class="mf"><label>Daily Calories (kcal)</label><input id="g-cal" type="number" placeholder="2000"></div>
-      <div class="mf"><label>Protein Goal (g)</label><input id="g-pro" type="number" placeholder="150"></div>
-      <div class="mf"><label>Carb Goal (g)</label><input id="g-carb" type="number" placeholder="200"></div>
-      <div class="mf"><label>Fat Goal (g)</label><input id="g-fat" type="number" placeholder="65"></div>
-    </div>
-    <div class="modal-actions">
-      <button class="cancel" onclick="closeGoalModal()">Cancel</button>
-      <button class="confirm" onclick="saveGoals()">Save Goals</button>
-    </div>
+<div class="ov" id="gm">
+  <div class="modal"><div class="mh"></div><h3>Daily Goals</h3>
+  <div class="mflds">
+    <div class="mf"><label>Calories (kcal)</label><input id="gcal" type="number" placeholder="2000"></div>
+    <div class="mf"><label>Protein (g)</label><input id="gpro" type="number" placeholder="150"></div>
+    <div class="mf"><label>Carbs (g)</label><input id="gcarb" type="number" placeholder="200"></div>
+    <div class="mf"><label>Fat (g)</label><input id="gfat" type="number" placeholder="65"></div>
+  </div>
+  <div class="macts"><button class="mcancel" onclick="cgm()">Cancel</button><button class="mok" onclick="sg()">Save</button></div>
   </div>
 </div>
 
-<!-- Install Banner -->
-<div id="inst-banner">
+<div id="ib">
   <div class="ib-ico">💪</div>
-  <div class="ib-text"><strong>Add to Home Screen</strong><span>Install FitCoach AI as an app</span></div>
-  <button class="ib-btn" id="ib-install">Install</button>
-  <button class="ib-close" id="ib-close">×</button>
+  <div class="ib-t"><strong>Add to Home Screen</strong><span>Install FitCoach AI as an app</span></div>
+  <button class="ib-btn" id="ibtn">Install</button>
+  <button class="ib-x" id="ibx">×</button>
 </div>
 
 <script>
-// ── STATE ──
-let currentDay = 0; // offset from today
-let goals = JSON.parse(localStorage.getItem('fc_goals') || '{"cal":2000,"pro":150,"carb":200,"fat":65}');
-let foodLog = JSON.parse(localStorage.getItem('fc_food') || '{}');
-let stats = JSON.parse(localStorage.getItem('fc_stats') || '{"plans":0,"entries":0}');
-let streak = parseInt(localStorage.getItem('fc_streak') || '0');
+let cd=0,g=JSON.parse(localStorage.getItem('fcg')||'{"cal":2000,"pro":150,"carb":200,"fat":65}'),
+fl=JSON.parse(localStorage.getItem('fcf')||'{}'),
+st=JSON.parse(localStorage.getItem('fcs')||'{"plans":0,"entries":0}'),
+str=parseInt(localStorage.getItem('fcstr')||'0');
 
-// ── NAVIGATION ──
-function goTo(screen, planType) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('s-' + screen).classList.add('active');
-  if (planType) updatePaySummary(planType);
-  window.scrollTo(0, 0);
+function goto(s,pt){
+  document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+  document.getElementById('s-'+s).classList.add('active');
+  if(pt){const m=pt==='monthly';document.getElementById('obox').innerHTML=`<div class="or"><span>FitCoach AI — ${m?'Monthly':'Single'}</span><strong>${m?'₹199':'₹99'}</strong></div><div class="or"><span>Duration</span><strong>${m?'30 days':'1 plan'}</strong></div><div class="or"><span>Total</span><strong class="otv">${m?'₹199':'₹99'}</strong></div>`;}
+  window.scrollTo(0,0);
 }
-
-function updatePaySummary(type) {
-  const isMonthly = type === 'monthly';
-  document.getElementById('pay-summary').innerHTML = `
-    <div class="sum-row"><span>FitCoach AI — ${isMonthly ? 'Monthly Plan' : 'Single Plan'}</span><strong>${isMonthly ? '₹199' : '₹99'}</strong></div>
-    <div class="sum-row"><span>Access</span><strong>${isMonthly ? '30 days' : '1 plan'}</strong></div>
-    <div class="sum-row"><span>Total</span><strong class="sum-total">${isMonthly ? '₹199' : '₹99'}</strong></div>`;
+function sw(t){
+  document.querySelectorAll('.tp2').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.bt').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tp-'+t).classList.add('active');
+  document.getElementById('nav-'+t).classList.add('on');
+  if(t==='tracker')rt();if(t==='profile')rp();
 }
+function tfaq(el){const q=el.querySelector('.fqq'),a=el.querySelector('.fqa');q.classList.toggle('open');a.classList.toggle('open')}
+function hp(e,t){if(e.currentTarget.href.includes('YOUR_')){e.preventDefault();alert('Add your '+t+' payment link first. Use Demo button to test.')}}
+document.querySelectorAll('.eqc').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('on')));
+function geq(){const s=[...document.querySelectorAll('.eqc.on')].map(c=>c.dataset.v);return s.length?s.join(', '):'bodyweight only'}
+const lm2=['Crafting your workout...','Designing your meal plan...','Calculating macros...','Personalising exercises...','Final touches...'];
+async function genPlan(){
+  const[goal,lev,days,age,eq]=[document.getElementById('pg').value,document.getElementById('pl').value,document.getElementById('pd').value,document.getElementById('pa').value,geq()];
+  document.getElementById('pform').classList.add('hidden');document.getElementById('ploading').classList.remove('hidden');document.getElementById('presult').classList.add('hidden');
+  let mi=0;const iv=setInterval(()=>{document.getElementById('lm').textContent=lm2[++mi%lm2.length]},2500);
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:`Expert personal trainer. Create a detailed fitness plan.
+Client: Goal=${goal}, Level=${lev}, Age=${age}, Days/week=${days}, Equipment=${eq}
 
-function switchTab(tab) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  document.getElementById('nav-' + tab).classList.add('active');
-  if (tab === 'tracker') renderTracker();
-  if (tab === 'profile') renderProfile();
-}
-
-// ── PAYMENT ──
-function handlePay(e, type) {
-  const link = e.currentTarget.href;
-  if (link.includes('YOUR_')) {
-    e.preventDefault();
-    alert('Setup needed: Replace YOUR_' + (type === 'instamojo' ? 'INSTAMOJO' : 'GUMROAD') + '_LINK in the HTML with your actual payment link.\n\nUse Demo button to test the app.');
-  }
-}
-
-// ── FAQ ──
-function toggleFaq(el) {
-  const q = el.querySelector('.faq-q');
-  const a = el.querySelector('.faq-a');
-  q.classList.toggle('open');
-  a.classList.toggle('open');
-}
-
-// ── EQUIPMENT CHIPS ──
-document.querySelectorAll('#equip-chips .chip').forEach(c => {
-  c.addEventListener('click', () => c.classList.toggle('on'));
-});
-function getEquip() {
-  const sel = [...document.querySelectorAll('#equip-chips .chip.on')].map(c => c.dataset.v);
-  return sel.length ? sel.join(', ') : 'bodyweight only (no equipment)';
-}
-
-// ── AI PLAN GENERATOR ──
-const loadMsgs = ['Crafting your workout schedule...','Designing your meal plan...','Calculating your macros...','Personalizing exercises...','Almost ready...'];
-
-async function genPlan() {
-  const goal = document.getElementById('p-goal').value;
-  const level = document.getElementById('p-level').value;
-  const days = document.getElementById('p-days').value;
-  const age = document.getElementById('p-age').value;
-  const eq = getEquip();
-  document.getElementById('plans-form').classList.add('hidden');
-  document.getElementById('plans-loading').classList.remove('hidden');
-  document.getElementById('plans-result').classList.add('hidden');
-  document.getElementById('plans-result').innerHTML = '';
-  let mi = 0;
-  const iv = setInterval(() => { document.getElementById('load-msg').textContent = loadMsgs[++mi % loadMsgs.length]; }, 2500);
-  const prompt = `You are an expert personal trainer and sports nutritionist. Create a detailed, actionable fitness plan.
-
-Client:
-- Goal: ${goal}
-- Level: ${level}
-- Age: ${age}
-- Training days/week: ${days}
-- Equipment: ${eq}
-
-Respond in exactly 3 sections:
+Reply in 3 sections:
 
 WORKOUT PLAN
-For each training day list: Day, Focus, then 5 exercises with sets×reps or duration. Add 1 sentence of day-specific guidance.
+Each training day: focus + 5 exercises (sets×reps or duration). One tip per day.
 
 MEAL PLAN
-Full sample day for the goal: Breakfast, Lunch, Dinner, Snacks. Each meal: foods + portions + calories + protein/carbs/fat grams. End with daily totals.
+Full sample day: Breakfast, Lunch, Dinner, Snacks. Each: foods + portions + calories + protein/carbs/fat. Daily totals.
 
 PRO TIPS
-3 specific, actionable tips for this exact goal and level.
-
-Be concise, specific, and motivating.`;
-  try {
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{role:'user',content:prompt}] })
-    });
-    clearInterval(iv);
-    const d = await r.json();
-    if (d.error) throw new Error(d.error.message);
-    const text = d.content.map(b => b.text||'').join('');
-    stats.plans++;
-    localStorage.setItem('fc_stats', JSON.stringify(stats));
-    updateStreak();
-    renderPlan(text, goal, level, days);
-  } catch(e) {
-    clearInterval(iv);
-    document.getElementById('plans-loading').classList.add('hidden');
-    document.getElementById('plans-form').classList.remove('hidden');
-    alert('Error: ' + e.message);
-  }
+3 specific actionable tips for this exact goal and level.`}]})});
+    clearInterval(iv);const d=await r.json();
+    if(d.error)throw new Error(d.error.message);
+    const text=d.content.map(b=>b.text||'').join('');
+    st.plans++;localStorage.setItem('fcs',JSON.stringify(st));us();rplan(text,goal,lev,days);
+  }catch(e){clearInterval(iv);document.getElementById('ploading').classList.add('hidden');document.getElementById('pform').classList.remove('hidden');alert('Error: '+e.message);}
 }
-
-function renderPlan(text, goal, level, days) {
-  document.getElementById('plans-loading').classList.add('hidden');
-  document.getElementById('plans-result').classList.remove('hidden');
-  const secs = [
-    {k:'WORKOUT',e:'🏋️',t:'Weekly Workout Plan'},
-    {k:'MEAL',e:'🥗',t:'Daily Meal Plan'},
-    {k:'PRO',e:'💡',t:'Pro Tips'}
-  ];
-  const goalShort = goal.split(' ').slice(0,3).join(' ');
-  let html = `<div class="res-badge"><div class="res-check">✓</div><div><strong>Your Plan is Ready!</strong><span>${level.split('(')[0].trim()} · ${goalShort} · ${days}×/week</span></div></div>`;
-  const parts = text.split(/(?:WORKOUT PLAN|MEAL PLAN|PRO TIPS)/i).filter(p=>p.trim());
-  parts.forEach((p,i) => {
-    const s = secs[i]||{e:'📋',t:'Details'};
-    html += `<div class="plan-block"><div class="plan-block-hd"><span class="e">${s.e}</span><strong>${s.t}</strong></div><div class="plan-block-bd">${esc(p.trim())}</div></div>`;
-  });
-  html += `<button class="reset-btn" onclick="resetPlan()">← Generate New Plan</button>`;
-  document.getElementById('plans-result').innerHTML = html;
-  document.getElementById('plans-result').scrollIntoView({behavior:'smooth',block:'start'});
+function rplan(text,goal,lev,days){
+  document.getElementById('ploading').classList.add('hidden');document.getElementById('presult').classList.remove('hidden');
+  const secs=[{e:'🏋️',t:'Weekly Workout Plan',tag:'Workout'},{e:'🥗',t:'Daily Meal Plan',tag:'Nutrition'},{e:'💡',t:'Pro Tips',tag:'Guidance'}];
+  let html=`<div class="rmeta"><div class="rtick">✓</div><div><strong>Your Plan is Ready</strong><span>${lev.split('(')[0].trim()} · ${goal.split(' ').slice(0,3).join(' ')} · ${days}×/week</span></div></div>`;
+  const parts=text.split(/(?:WORKOUT PLAN|MEAL PLAN|PRO TIPS)/i).filter(p=>p.trim());
+  parts.forEach((p,i)=>{const s=secs[i]||{e:'📋',t:'Details',tag:''};html+=`<div class="pb"><div class="pb-hd"><span class="e">${s.e}</span><strong>${s.t}</strong><span class="ptag">${s.tag}</span></div><div class="pb-bd">${esc(p.trim())}</div></div>`;});
+  html+=`<button class="npbtn" onclick="rp2()">← Generate New Plan</button>`;
+  const el=document.getElementById('presult');el.innerHTML=html;el.scrollIntoView({behavior:'smooth',block:'start'});
 }
-
-function resetPlan() {
-  document.getElementById('plans-result').classList.add('hidden');
-  document.getElementById('plans-form').classList.remove('hidden');
+function rp2(){document.getElementById('presult').classList.add('hidden');document.getElementById('pform').classList.remove('hidden')}
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function dk(o=0){const d=new Date();d.setDate(d.getDate()+o);return d.toISOString().slice(0,10)}
+function chd(dir){cd+=dir;if(cd>0)cd=0;rt()}
+function rt(){
+  const k=dk(cd);document.getElementById('dlbl').textContent=cd===0?'Today':cd===-1?'Yesterday':k;
+  const es=fl[k]||[],t=es.reduce((a,e)=>({cal:a.cal+e.cal,pro:a.pro+e.pro,carb:a.carb+e.carb,fat:a.fat+e.fat}),{cal:0,pro:0,carb:0,fat:0});
+  const pct=Math.min(t.cal/g.cal,1),circ=314.2;
+  document.getElementById('cr').style.strokeDashoffset=circ-(pct*circ);
+  document.getElementById('cc').textContent=t.cal;document.getElementById('cgl').textContent='of '+g.cal;
+  document.getElementById('mp').textContent=t.pro+'g';document.getElementById('mc2').textContent=t.carb+'g';document.getElementById('mf2').textContent=t.fat+'g';
+  document.getElementById('mbp').style.width=Math.min(100,(t.pro/g.pro)*100)+'%';
+  document.getElementById('mbc').style.width=Math.min(100,(t.carb/g.carb)*100)+'%';
+  document.getElementById('mbf').style.width=Math.min(100,(t.fat/g.fat)*100)+'%';
+  const rem=g.cal-t.cal;document.getElementById('ctip').textContent=rem>0?'💡 '+rem+' kcal remaining today. Keep going!':'✅ Goal reached! '+Math.abs(rem)+' kcal over target.';
+  const icos=['🌅','🌞','🌇','🌙','☕','🥤','🍽️'];
+  document.getElementById('flog').innerHTML=es.length?es.map((e,i)=>`<div class="fe"><div class="fi2">${icos[i%icos.length]}</div><div class="fin"><strong>${esc(e.name)}</strong><span>${e.pro}g protein · ${e.carb}g carbs · ${e.fat}g fat</span></div><div class="fcal">${e.cal}</div><button class="fdel" onclick="df('${k}',${i})">×</button></div>`).join(''):`<div class="empty"><div class="ei">🍽️</div><p>Nothing logged yet.<br>Tap "+ Add Food" to start.</p></div>`;
 }
-
-function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// ── CALORIE TRACKER ──
-function todayKey(offset=0) {
-  const d = new Date(); d.setDate(d.getDate() + offset);
-  return d.toISOString().slice(0,10);
+function oad(){document.getElementById('am').classList.add('open')}
+function cam(){document.getElementById('am').classList.remove('open');['fn','fc','fp','fca','ff'].forEach(id=>document.getElementById(id).value='')}
+function fill(n,c,p,ca,f){document.getElementById('fn').value=n;document.getElementById('fc').value=c;document.getElementById('fp').value=p;document.getElementById('fca').value=ca;document.getElementById('ff').value=f}
+function af(){
+  const n=document.getElementById('fn').value.trim(),c=parseInt(document.getElementById('fc').value)||0,p=parseFloat(document.getElementById('fp').value)||0,ca=parseFloat(document.getElementById('fca').value)||0,f=parseFloat(document.getElementById('ff').value)||0;
+  if(!n||!c){alert('Enter food name and calories');return}
+  const k=dk(cd);if(!fl[k])fl[k]=[];fl[k].push({name:n,cal:c,pro:p,carb:ca,fat:f});st.entries++;
+  localStorage.setItem('fcf',JSON.stringify(fl));localStorage.setItem('fcs',JSON.stringify(st));cam();rt();us();
 }
-
-function changeDay(dir) {
-  currentDay += dir;
-  if (currentDay > 0) currentDay = 0;
-  renderTracker();
+function df(k,i){fl[k].splice(i,1);localStorage.setItem('fcf',JSON.stringify(fl));rt()}
+function ogm(){document.getElementById('gcal').value=g.cal;document.getElementById('gpro').value=g.pro;document.getElementById('gcarb').value=g.carb;document.getElementById('gfat').value=g.fat;document.getElementById('gm').classList.add('open')}
+function cgm(){document.getElementById('gm').classList.remove('open')}
+function sg(){
+  g={cal:parseInt(document.getElementById('gcal').value)||2000,pro:parseInt(document.getElementById('gpro').value)||150,carb:parseInt(document.getElementById('gcarb').value)||200,fat:parseInt(document.getElementById('gfat').value)||65};
+  localStorage.setItem('fcg',JSON.stringify(g));
+  document.getElementById('gdc').textContent=g.cal+' kcal';document.getElementById('gdp').textContent=g.pro+'g';document.getElementById('gdca').textContent=g.carb+'g';document.getElementById('gdf').textContent=g.fat+'g';
+  cgm();rt();
 }
-
-function renderTracker() {
-  const key = todayKey(currentDay);
-  const label = currentDay === 0 ? 'Today' : currentDay === -1 ? 'Yesterday' : key;
-  document.getElementById('cal-date-label').textContent = label;
-  const entries = foodLog[key] || [];
-  const tot = entries.reduce((a,e) => ({cal:a.cal+e.cal, pro:a.pro+e.pro, carb:a.carb+e.carb, fat:a.fat+e.fat}), {cal:0,pro:0,carb:0,fat:0});
-  // Ring
-  const pct = Math.min(tot.cal / goals.cal, 1);
-  const circ = 345.4;
-  document.getElementById('cal-ring').style.strokeDashoffset = circ - (pct * circ);
-  document.getElementById('cal-consumed').textContent = tot.cal;
-  document.getElementById('cal-goal-label').textContent = `of ${goals.cal}`;
-  // Macros
-  document.getElementById('m-pro').textContent = tot.pro + 'g';
-  document.getElementById('m-carb').textContent = tot.carb + 'g';
-  document.getElementById('m-fat').textContent = tot.fat + 'g';
-  document.getElementById('mbar-pro').style.width = Math.min(100, (tot.pro/goals.pro)*100) + '%';
-  document.getElementById('mbar-carb').style.width = Math.min(100, (tot.carb/goals.carb)*100) + '%';
-  document.getElementById('mbar-fat').style.width = Math.min(100, (tot.fat/goals.fat)*100) + '%';
-  // Goal tip
-  const rem = goals.cal - tot.cal;
-  document.getElementById('cal-goal-tip').textContent = rem > 0 ? `${rem} kcal remaining today. Keep going!` : `Goal reached! ${Math.abs(rem)} kcal over target.`;
-  // Food log
-  const logEl = document.getElementById('food-log');
-  if (!entries.length) {
-    logEl.innerHTML = `<div class="empty-state"><div class="ei">🍽️</div><p>No food logged yet.<br>Tap "+ Add Food" to start.</p></div>`;
-    return;
-  }
-  const mealIcons = ['🌅','🌞','🌇','🌙','☕','🥤'];
-  logEl.innerHTML = entries.map((e,i) => `
-    <div class="meal-entry">
-      <div class="meal-ico">${mealIcons[i%mealIcons.length]}</div>
-      <div class="meal-info"><strong>${esc(e.name)}</strong><span>${e.pro}g pro · ${e.carb}g carbs · ${e.fat}g fat</span></div>
-      <div class="meal-cals">${e.cal}</div>
-      <button class="del-btn" onclick="delFood('${key}',${i})">×</button>
-    </div>`).join('');
+function rp(){
+  const tc=fl[dk()]||[],tcd=tc.reduce((a,e)=>a+e.cal,0);
+  document.getElementById('stp').textContent=st.plans;document.getElementById('sts').textContent=str+'🔥';document.getElementById('stc2').textContent=tcd;document.getElementById('ste').textContent=st.entries;
+  document.getElementById('sc').textContent=str;
+  document.getElementById('gdc').textContent=g.cal+' kcal';document.getElementById('gdp').textContent=g.pro+'g';document.getElementById('gdca').textContent=g.carb+'g';document.getElementById('gdf').textContent=g.fat+'g';
 }
-
-function openModal() { document.getElementById('add-modal').classList.add('open'); }
-function closeModal() {
-  document.getElementById('add-modal').classList.remove('open');
-  ['f-name','f-cal','f-pro','f-carb','f-fat'].forEach(id => document.getElementById(id).value = '');
-  document.querySelectorAll('.qf').forEach(q => q.classList.remove('sel'));
+function us(){
+  const last=localStorage.getItem('fcla'),today=dk();
+  if(last!==today){str=last===dk(-1)?str+1:1;localStorage.setItem('fcstr',str);localStorage.setItem('fcla',today);document.getElementById('sc').textContent=str}
 }
-
-function fillFood(name,cal,pro,carb,fat) {
-  document.getElementById('f-name').value = name;
-  document.getElementById('f-cal').value = cal;
-  document.getElementById('f-pro').value = pro;
-  document.getElementById('f-carb').value = carb;
-  document.getElementById('f-fat').value = fat;
-}
-
-function addFood() {
-  const name = document.getElementById('f-name').value.trim();
-  const cal = parseInt(document.getElementById('f-cal').value)||0;
-  const pro = parseFloat(document.getElementById('f-pro').value)||0;
-  const carb = parseFloat(document.getElementById('f-carb').value)||0;
-  const fat = parseFloat(document.getElementById('f-fat').value)||0;
-  if (!name||!cal) { alert('Please enter food name and calories'); return; }
-  const key = todayKey(currentDay);
-  if (!foodLog[key]) foodLog[key] = [];
-  foodLog[key].push({name,cal,pro,carb,fat});
-  stats.entries++;
-  localStorage.setItem('fc_food', JSON.stringify(foodLog));
-  localStorage.setItem('fc_stats', JSON.stringify(stats));
-  closeModal();
-  renderTracker();
-  updateStreak();
-}
-
-function delFood(key, idx) {
-  foodLog[key].splice(idx, 1);
-  localStorage.setItem('fc_food', JSON.stringify(foodLog));
-  renderTracker();
-}
-
-// ── GOALS ──
-function openGoalModal() {
-  document.getElementById('g-cal').value = goals.cal;
-  document.getElementById('g-pro').value = goals.pro;
-  document.getElementById('g-carb').value = goals.carb;
-  document.getElementById('g-fat').value = goals.fat;
-  document.getElementById('goal-modal').classList.add('open');
-}
-function closeGoalModal() { document.getElementById('goal-modal').classList.remove('open'); }
-function saveGoals() {
-  goals = {
-    cal: parseInt(document.getElementById('g-cal').value)||2000,
-    pro: parseInt(document.getElementById('g-pro').value)||150,
-    carb: parseInt(document.getElementById('g-carb').value)||200,
-    fat: parseInt(document.getElementById('g-fat').value)||65
-  };
-  localStorage.setItem('fc_goals', JSON.stringify(goals));
-  document.getElementById('goal-display').textContent = goals.cal + ' kcal';
-  document.getElementById('pro-goal-display').textContent = goals.pro + 'g';
-  document.getElementById('carb-goal-display').textContent = goals.carb + 'g';
-  document.getElementById('fat-goal-display').textContent = goals.fat + 'g';
-  closeGoalModal();
-  renderTracker();
-}
-
-// ── PROFILE ──
-function renderProfile() {
-  const todayEntries = foodLog[todayKey()] || [];
-  const todayCals = todayEntries.reduce((a,e)=>a+e.cal,0);
-  document.getElementById('stat-plans').textContent = stats.plans;
-  document.getElementById('stat-streak').textContent = streak + '🔥';
-  document.getElementById('stat-calories').textContent = todayCals;
-  document.getElementById('stat-entries').textContent = stats.entries;
-  document.getElementById('streak-count').textContent = streak;
-  document.getElementById('goal-display').textContent = goals.cal + ' kcal';
-  document.getElementById('pro-goal-display').textContent = goals.pro + 'g';
-  document.getElementById('carb-goal-display').textContent = goals.carb + 'g';
-  document.getElementById('fat-goal-display').textContent = goals.fat + 'g';
-}
-
-// ── STREAK ──
-function updateStreak() {
-  const last = localStorage.getItem('fc_last_active');
-  const today = todayKey();
-  if (last !== today) {
-    const yesterday = todayKey(-1);
-    streak = last === yesterday ? streak + 1 : 1;
-    localStorage.setItem('fc_streak', streak);
-    localStorage.setItem('fc_last_active', today);
-    document.getElementById('streak-count').textContent = streak;
-  }
-}
-
-// ── PWA INSTALL ──
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault(); deferredPrompt = e;
-  setTimeout(() => document.getElementById('inst-banner').classList.add('show'), 3000);
-});
-document.getElementById('ib-install').addEventListener('click', () => {
-  if(deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{deferredPrompt=null}); }
-  document.getElementById('inst-banner').classList.remove('show');
-});
-document.getElementById('ib-close').addEventListener('click', () => document.getElementById('inst-banner').classList.remove('show'));
-
-// ── SERVICE WORKER ──
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
-
-// ── URL PARAM (post-payment redirect) ──
-const params = new URLSearchParams(window.location.search);
-if (params.get('paid') === 'true') goTo('app');
-
-// ── INIT ──
-updateStreak();
+let dp2;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp2=e;setTimeout(()=>document.getElementById('ib').classList.add('show'),3000)});
+document.getElementById('ibtn').addEventListener('click',()=>{if(dp2){dp2.prompt();dp2.userChoice.then(()=>dp2=null)}document.getElementById('ib').classList.remove('show')});
+document.getElementById('ibx').addEventListener('click',()=>document.getElementById('ib').classList.remove('show'));
+if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
+if(new URLSearchParams(window.location.search).get('paid')==='true')goto('app');
+us();
 </script>
 </body>
 </html>
